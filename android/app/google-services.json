@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "26182736698",
+    "project_id": "flowchat-e5b22",
+    "storage_bucket": "flowchat-e5b22.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26182736698:android:bce6064865c5afb3894e03",
+        "android_client_info": {
+          "package_name": "com.example.first_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJZ-QR-wUEU5_aNrUeaggLNS4Gn8W0Ws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26182736698:android:2484c0821ba453bd894e03",
+        "android_client_info": {
+          "package_name": "com.example.flowchat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJZ-QR-wUEU5_aNrUeaggLNS4Gn8W0Ws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
