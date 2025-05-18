@@ -1,6 +1,5 @@
 import 'package:flowchat_app/src/features/core/screens/sign_up_page.dart';
 import 'package:flutter/material.dart';
-
 import 'login_page.dart';
 
 class SignupOrLogin extends StatefulWidget {

@@ -31,18 +31,18 @@ class LoginController extends GetxController {
 
     }catch (e){
       isLoading.value = false;
-      Helper.errorSnackBar(tittle: Text("Error"), message: e.toString());
+      Helper.errorSnackBar(title: Text("Error"), message: e.toString());
     }
   }
 
 
-// // call this function from design and it will do the rest
-//   Future<void> loginUser(String email, String password) async{
-//     String? error = await AuthenticationRepo.instance.loginWithEmailAndPassword(email, password) as String;
-//     if (error != null){
-//       Get.showSnackbar(GetSnackBar(message: error.toString(),));
-//     }
-//   }
+// call this function from design and it will do the rest
+  Future<void> loginUser(String email, String password) async{
+    String? error = await AuthenticationRepo.instance.loginWithEmailAndPassword(email, password) as String;
+    if (error != null){
+      Get.showSnackbar(GetSnackBar(message: error.toString(),));
+    }
+  }
 
 
 }

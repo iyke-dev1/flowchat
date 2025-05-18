@@ -8,11 +8,6 @@ import '../controllers/signup_controller.dart';
 
 
 class SignUpPage extends StatelessWidget {
-    // final TextEditingController _fullNameController = TextEditingController();
-    // final TextEditingController _emailController = TextEditingController();
-    // final TextEditingController _phoneNumberController = TextEditingController();
-    // final TextEditingController _passwordController = TextEditingController();
-  // final TextEditingController _confirmPasswordController = TextEditingController();
   final controller = Get.put(SignUpController());
   final controller1 = Get.put(PasswordController());
   final _formKey = GlobalKey<FormState>();
@@ -115,45 +110,39 @@ void signUp(){
             const SizedBox(height: 20,),
               //login button
 
-            Obx(()=> MyButton(
+              Obx(() => MyButton(
                 isLoading: controller.isLoading.value ? true : false,
-                text : "Sign up".toUpperCase(),
-                onpressed: controller.isFacebookLoading.value || controller.isGoogleLoading.value ? (){} : controller.isLoading.value ? (){} : ()=> controller.createUser(),
+                text: "SIGN UP",
+                onpressed: controller.isFacebookLoading.value || controller.isGoogleLoading.value || controller.isLoading.value
+                    ? null
+                    : () {
+                  if (_formKey.currentState!.validate()) {
+                    // Start loading
+                    controller.isLoading.value = true;
 
-                  //   (){
-                  // if(_formKey.currentState!.validate()){
-                   // Email and Password Authentication
-                   //  SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                    // Call the sign-up methods
+                    SignUpController.instance.registerUser(
+                      controller.email.text.trim(),
+                      controller.password.text.trim(),
+                    );
 
-                    // for phone Authentication
-                    // SignUpController.instance.phoneAuthentication(controller.phoneNo.text.trim());
-
-                    // final user = UserModel(
-                    //     fullName: controller.fullName.text.trim(),
-                    //     email: controller.email.text.trim(),
-                    //     phoneNo: controller.phoneNo.text.trim(),
-                    //     password: controller.password.text.trim()
-                    // );
+                    // SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
 
 
                     // final user = UserModel(
-                    //     fullName: "iyke",
-                    //     email: "daniel@gmial.com",
-                    //     phoneNo: "0987654321",
-                    //     password: "1234567890"
+                    //   fullName: controller.fullName.text.trim(),
+                    //   email: controller.email.text.trim(),
+                    //   phoneNo: controller.phoneNo.text.trim(),
+                    //   password: controller.password.text.trim(),
                     // );
                     //
-                    // print("object");
                     // SignUpController.instance.createUser(user);
-                    //
 
-                    // Get.to(()=> OtpScreen());
-
-                //   }
-                // },
-
-              ),
-            ) ,
+                    // You can end loading or navigate after some async operation
+                     Future.delayed(Duration(seconds: 2), () => controller.isLoading.value = false);
+                  }
+                },
+              )),
 
 
               SizedBox(height: 20,),

@@ -64,7 +64,8 @@ class MailVerification extends StatelessWidget {
                     Text("Back to Login".toLowerCase(), style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blue
-                    ),)
+                    ),
+                    )
                   ],
                 ),
               ),

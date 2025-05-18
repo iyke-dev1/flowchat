@@ -7,6 +7,7 @@ class MyTextField extends StatelessWidget {
   final IconData prefixIcon;
   final Widget? suffixIcon;
   final String? initialValue;
+  final String? Function(String?)? validator; // ✅ Add this line
 
 
   final TextEditingController? controller;
@@ -18,7 +19,8 @@ class MyTextField extends StatelessWidget {
   required this.prefixIcon,
   this.suffixIcon,
   this.controller,
-    this.initialValue
+  this.initialValue,
+  this.validator, // ✅ Add this
   });
 
 

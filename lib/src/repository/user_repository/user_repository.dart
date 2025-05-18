@@ -14,7 +14,6 @@ class UserRepo extends GetxController{
   /// store user in firebase
   Future<void> createUser(UserModel user) async {
 
-    print("hereeeeeeeeeeeee");
     await _db
         .collection("Users")
         .add(user.toJason())
@@ -51,8 +50,7 @@ class UserRepo extends GetxController{
     final snapshot = await _db.collection("Users").get();
     final userData = snapshot.docs.map((e)=> UserModel.fromSnapshots(e)).toList();
 
-    print("1111111111111111111111");
-    print(userData);
+
     return userData;
  }
 

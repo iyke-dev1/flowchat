@@ -1,25 +1,22 @@
-// Import Firebase Authentication and Core
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flowchat_app/src/exceptions/custom_exceptions.dart';
-// Import custom exception handler for sign-up errors
-import 'package:flowchat_app/src/exceptions/signup_password_email_failure.dart';
-import 'package:flowchat_app/src/features/authentication/mail_verification/mail_verification.dart';
-// Import GetX for state management and navigation
 import 'package:get/get.dart';
-import '../../features/core/screens/homepage.dart';
+import '../../features/core/screens/home_screen.dart';
+import '../../features/core/screens/mail_verification/mail_verification.dart';
 import '../../features/core/screens/welcome_page.dart';
 
 // Create a controller for managing authentication
 class AuthenticationRepo extends GetxController {
-  // Singleton pattern to easily access the instance from anywhere
+
   static AuthenticationRepo get instance => Get.find();
-  // Firebase authentication instance
-  final _auth = FirebaseAuth.instance;
-  // Reactive variable to listen to user authentication changes
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   late final Rx<User?> _firebaseUser;
-  // Observable string to store verification ID (used for OTP mail_verification)
   var verificationId = "".obs;
-  // Loading state (e.g., for showing spinners)
+
+
   var isLoading = false.obs;
   final isGoogleLoading = false.obs;
   final isFacebookLoading =false.obs;
@@ -28,6 +25,12 @@ class AuthenticationRepo extends GetxController {
 User? get firebaseUser => _firebaseUser.value;
 String get getUserID => firebaseUser?.uid ?? "";
 String get getUserEmail => firebaseUser?.email ?? "";
+
+
+ // get current user
+ User? getCurrentUser(){
+   return _auth.currentUser;
+ }
 
   /// load when the app   lunches fro the main.dart
   @override
@@ -44,16 +47,21 @@ String get getUserEmail => firebaseUser?.email ?? "";
   setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => const WelcomePage())  // Not logged in
-        : user.emailVerified ? Get.offAll(() => const Homepage()): Get.offAll(MailVerification());   // Logged in
+        :  Get.offAll(() =>  HomeScreen());
+        // user == null
+        // ? Get.offAll(() => const WelcomePage())  // Not logged in
+        // : user.emailVerified ? Get.offAll(() =>  HomeScreen()): Get.offAll(MailVerification());   // Logged in
   }
 
-  /// [Email verificaiton] - Register
+  /// [Email verification] - Register
   // Creates a new user with email and password
-  Future<String?> createUserWithEmailAndPassword(
+  Future<UserCredential> createUserWithEmailAndPassword(
       String email,
       String password,
-      ) async {
+      ) async
+  {
     try {
+      UserCredential userCredential =
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -61,20 +69,64 @@ String get getUserEmail => firebaseUser?.email ?? "";
 
       // Navigate based on whether user creation was successful
       _firebaseUser.value != null
-          ? Get.offAll(() => const Homepage())
+          ? Get.offAll(() =>  HomeScreen())
           : Get.offAll(() => const WelcomePage());
 
+      // save user info in separate doc
+      _firestore.collection("Users").doc(userCredential.user!.uid).set(
+        {
+          'uid': userCredential.user!.uid,
+          'email': email,
+        }
+      );
+
+
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       // Handle Firebase exceptions and convert to user-friendly message
-      final ex = SignupWithEmailAndPasswordFailure.code(e.code);
-      print('FIREBASE AUTH EXCEPTION - ${ex.message}');
-      throw ex;
-    } catch (_) {
+      // final ex = SignupWithEmailAndPasswordFailure.code(e.code);
+      // print('FIREBASE AUTH EXCEPTION - ${ex.message}');
+      throw Exception(e.code);
+    // } catch (_) {
       // Fallback for unexpected exceptions
-      var ex = SignupWithEmailAndPasswordFailure();
-      print('EXCEPTION - ${ex.message}');
+      // var ex = SignupWithEmailAndPasswordFailure();
+      // print('EXCEPTION - ${ex.message}');
     }
-    return null;
+
+  }
+
+
+  /// [Email verification] - login
+  // Logs in existing user with email and password
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential =
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Navigate to the appropriate screen after login
+      _firebaseUser.value != null
+          ? Get.offAll(() =>  HomeScreen())
+          : Get.offAll(() => const WelcomePage());
+
+      // save user info in separate doc
+      _firestore.collection("Users").doc(userCredential.user!.uid).set(
+          {
+            'uid': userCredential.user!.uid,
+            'email': email,
+          }
+      );
+
+
+      return userCredential;
+    } on FirebaseAuthException catch (e){
+      // Handle login-specific Firebase errors here (currently ignored)
+    // } catch (_) {
+      throw Exception(e.code);
+      // Fallback for unexpected errors (currently ignored)
+    }
   }
 
 
@@ -93,27 +145,6 @@ Future<void> sendEmailVerification() async{
     }
 }
 
-
-  /// [Email verificaiton] - login
-  // Logs in existing user with email and password
-  Future<void> loginWithEmailAndPassword(String email, String password) async {
-    try {
-      await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      // Navigate to the appropriate screen after login
-      _firebaseUser.value != null
-          ? Get.offAll(() => const Homepage())
-          : Get.offAll(() => const WelcomePage());
-
-    } on FirebaseAuthException {
-      // Handle login-specific Firebase errors here (currently ignored)
-    } catch (_) {
-      // Fallback for unexpected errors (currently ignored)
-    }
-  }
 
   // Start phone authentication by sending an OTP
   Future<void> phoneAuthentication(String phoneNo) async {
@@ -160,8 +191,8 @@ Future<void> sendEmailVerification() async{
   }
 
 
-
-
   // Logs out the currently authenticated user
-  Future<void> logout() async => await _auth.signOut();
+  Future<void> logout() async {
+    Get.offAll(()=> WelcomePage());
+  }
 }

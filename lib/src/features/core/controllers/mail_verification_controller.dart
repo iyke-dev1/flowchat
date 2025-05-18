@@ -21,7 +21,7 @@ class MailVerificationController extends GetxController {
     try {
       await AuthenticationRepo.instance.sendEmailVerification();
     } catch (e) {
-      Helper.errorSnackBar(tittle: const Text("error"), message: e.toString());
+      Helper.errorSnackBar(title: const Text("error"), message: e.toString());
     }
   }
 
@@ -41,6 +41,11 @@ class MailVerificationController extends GetxController {
   /// --- Manually check if verification completed then redirect
   void manuallyCheckVerificationStatus() {
     // TODO: Add implementation
+    FirebaseAuth.instance.currentUser?.reload();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user!.emailVerified) {
+      AuthenticationRepo.instance.setInitialScreen(user);
+    }
   }
 }
 

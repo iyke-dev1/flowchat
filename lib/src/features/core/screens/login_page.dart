@@ -100,14 +100,14 @@ class LoginPage extends StatelessWidget {
             MyButton(
               text : "Login".toUpperCase(),
               onpressed: (){
-
+             if(_formKey.currentState!.validate()){
+                    // SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                    LoginController.instance.loginUser(controller1.email.text.trim(), controller1.password.text.trim());
+                    // Get.to(()=> OtpScreen());
+                  }
 
               }
-              //   if(_formKey.currentState!.validate()){
-              //     // SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
-              //     // LoginController.instance.loginUser(controller1.email.text.trim(), controller1.password.text.trim());
-              //     // Get.to(()=> OtpScreen());
-              //   }
+
               // },
             ),
 
