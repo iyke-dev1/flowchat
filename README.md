@@ -7,12 +7,12 @@ Flow Chat is a sleek real-time messaging app built with **Flutter** and **Fireba
 
 ## 🌟 Features
 
-- 🔥 Real-time chat using Firebase Realtime Database
-- 🧑‍🤝‍🧑 Firebase Authentication
-- 📱 Clean, intuitive UI
-- ✉️ Push Notifications
+-  Real-time chat using Firebase Realtime Database
+-  Firebase Authentication
+-  Clean, intuitive UI
+- ✉ Push Notifications
 
-## 📸 Screenshots
+##  Screenshots
 
 <p float="left">
 <img src="assets/screenshots/flow_1.png" width="250"/>
