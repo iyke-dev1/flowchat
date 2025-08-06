@@ -1,45 +1,25 @@
 
----
-
-## 📌 2. Flow Chat – Real-Time Firebase Chat App
-
+### 📄 `README.md`:
 ```markdown
-# 💬 Flow Chat – Real-Time Firebase Chat App
+# 💬 Flow Chat — Firebase-Based Real-Time Chat App
 
-Flow Chat is a real-time chat application built using Flutter and Firebase. It supports seamless user messaging, clean UI design, and instant updates using Firebase Realtime Database or Firestore.
+Flow Chat is a sleek real-time messaging app built with **Flutter** and **Firebase**, featuring seamless multi-user communication.
 
----
+## 🌟 Features
 
-## 🚀 Features
-
-- 🔄 Real-time messaging
-- 🔐 Firebase Authentication
-- 💬 Clean, responsive chat UI
-- 🔔 Push notifications (via Firebase Cloud Messaging)
-- 🧩 Modular codebase (MVVM)
-
----
+- 🔥 Real-time chat using Firebase Realtime Database
+- 🧑‍🤝‍🧑 Firebase Authentication
+- 📱 Clean, intuitive UI
+- ✉️ Push Notifications
 
 ## 📸 Screenshots
 
-### Home Screen  
-![Home](assets/home_screen.png)
+<p float="left">
+<img src="assets/screenshots/flow_1.png" width="250"/>
+<img src="assets/screenshots/flow_2.png" width="250"/>
+</p>
 
-### Chat Window  
-![Chat](assets/chat_window.png)
-
----
-
-## 🛠️ Built With
-
-- **Flutter**
-- **Firebase Auth**
-- **Firestore / Realtime DB**
-- **Firebase Cloud Messaging**
-
----
-
-## 🧪 How to Run
+## 🚀 Getting Started
 
 ```bash
 git clone https://github.com/iyke-dev1/flow-chat.git
