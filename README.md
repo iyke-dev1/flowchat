@@ -1,9 +1,7 @@
-```markdown
 #  Flow Chat – Real-Time Firebase Chat App
 
 Flow Chat is a real-time chat application built using Flutter and Firebase. It supports seamless user messaging, clean UI design, and instant updates using Firebase Realtime Database or Firestore.
 
----
 
 ## 🚀 Features
 
@@ -28,7 +26,6 @@ Flow Chat is a real-time chat application built using Flutter and Firebase. It s
 - **Firebase Auth**
 - **Firestore / Realtime DB**
 - **Firebase Cloud Messaging**
-
 
 
 ## 🧪 How to Run
